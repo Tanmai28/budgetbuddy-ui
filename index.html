@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BudgetBuddy – Personal Expense Tracker</title>
+  <style>
+    :root {
+      --green: #4CAF50;
+      --red: #E74C3C;
+      --yellow: #F1C40F;
+      --bg: #f8f9fa;
+      --dark: #2c3e50;
+      --light: #fff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { display: flex; min-height: 100vh; background: var(--bg); color: var(--dark); }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: var(--dark);
+      color: var(--light);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar h2 { margin-bottom: 2rem; font-size: 1.4rem; }
+    .sidebar a {
+      text-decoration: none;
+      color: var(--light);
+      display: block;
+      padding: 0.8rem;
+      margin: 0.3rem 0;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover { background: rgba(255,255,255,0.1); }
+
+    /* Main */
+    .main { flex: 1; display: flex; flex-direction: column; }
+    
+    /* Header */
+    .header {
+      background: var(--light);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+    .header .balance { font-size: 1.2rem; font-weight: bold; }
+    .profile { width: 40px; height: 40px; border-radius: 50%; background: #ccc; }
+
+    /* Dashboard */
+    .dashboard {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: var(--light);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
+    .card .value { font-size: 1.4rem; font-weight: bold; }
+
+    /* Transaction Table */
+    .transactions {
+      margin: 2rem;
+      background: var(--light);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #eee; }
+    th { background: #f4f6f7; }
+    td.income { color: var(--green); font-weight: bold; }
+    td.expense { color: var(--red); font-weight: bold; }
+
+    /* Spending Breakdown */
+    .spending {
+      margin: 2rem;
+      background: var(--light);
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .progress { margin: 0.8rem 0; }
+    .progress span { display: block; margin-bottom: 0.3rem; }
+    .bar {
+      height: 14px;
+      border-radius: 7px;
+      background: #eee;
+      overflow: hidden;
+    }
+    .bar div {
+      height: 100%;
+    }
+    .food { width: 70%; background: var(--red); }
+    .transport { width: 40%; background: var(--yellow); }
+    .bills { width: 55%; background: var(--green); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .header { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>BudgetBuddy</h2>
+    <a href="#">Dashboard</a>
+    <a href="#">Categories</a>
+    <a href="#">Reports</a>
+    <a href="#">Settings</a>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="header">
+      <div class="balance">Total Balance: $5,200</div>
+      <div class="profile"></div>
+    </header>
+
+    <!-- Overview Cards -->
+    <section class="dashboard">
+      <div class="card">
+        <h3>Total Spent</h3>
+        <div class="value">$1,500</div>
+      </div>
+      <div class="card">
+        <h3>Savings %</h3>
+        <div class="value">28%</div>
+      </div>
+      <div class="card">
+        <h3>Top Category</h3>
+        <div class="value">Food</div>
+      </div>
+    </section>
+
+    <!-- Transactions -->
+    <section class="transactions">
+      <h3>Transaction Log</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2025-08-15</td>
+            <td>Food</td>
+            <td class="expense">- $40</td>
+            <td>Expense</td>
+          </tr>
+          <tr>
+            <td>2025-08-14</td>
+            <td>Salary</td>
+            <td class="income">+ $3,000</td>
+            <td>Income</td>
+          </tr>
+          <tr>
+            <td>2025-08-12</td>
+            <td>Transport</td>
+            <td class="expense">- $60</td>
+            <td>Expense</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Spending Breakdown -->
+    <section class="spending">
+      <h3>Spending Breakdown</h3>
+      <div class="progress">
+        <span>Food</span>
+        <div class="bar"><div class="food"></div></div>
+      </div>
+      <div class="progress">
+        <span>Transport</span>
+        <div class="bar"><div class="transport"></div></div>
+      </div>
+      <div class="progress">
+        <span>Bills</span>
+        <div class="bar"><div class="bills"></div></div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
